@@ -1,0 +1,31 @@
+{
+  "name": "helpdesk-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "format": "prettier --write app components tests playwright.config.ts next.config.ts",
+    "format:backend": "prettier --plugin=prettier-plugin-java --write ../backend/src/**/*.java"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "next": "16.4.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "prettier": "^3.10.1",
+    "prettier-plugin-java": "^2.11.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.9.3"
+  }
+}

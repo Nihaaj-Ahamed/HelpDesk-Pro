@@ -1,0 +1,10 @@
+CREATE TABLE accounts (id uuid PRIMARY KEY, full_name varchar(100) NOT NULL, email varchar(254) NOT NULL UNIQUE, password_hash varchar(100) NOT NULL);
+CREATE TABLE companies (id uuid PRIMARY KEY, name varchar(120) NOT NULL, slug varchar(48) NOT NULL UNIQUE);
+CREATE TABLE memberships (account_id uuid REFERENCES accounts(id), company_id uuid REFERENCES companies(id), role varchar(30) NOT NULL CHECK(role IN ('COMPANY_ADMIN','SUPPORT_AGENT')), PRIMARY KEY(account_id,company_id));
+CREATE TABLE session_families (id uuid PRIMARY KEY, account_id uuid NOT NULL REFERENCES accounts(id), expires_at timestamptz NOT NULL, revoked boolean NOT NULL DEFAULT false);
+CREATE TABLE refresh_sessions (id uuid PRIMARY KEY, account_id uuid NOT NULL REFERENCES accounts(id), family_id uuid NOT NULL REFERENCES session_families(id) ON DELETE CASCADE, token_hash varchar(64) NOT NULL UNIQUE, expires_at timestamptz NOT NULL, revoked boolean NOT NULL DEFAULT false);
+CREATE INDEX refresh_account_idx ON refresh_sessions(account_id);
+CREATE TABLE tickets (id uuid PRIMARY KEY, company_id uuid NOT NULL REFERENCES companies(id), subject varchar(200) NOT NULL, status varchar(30) NOT NULL DEFAULT 'OPEN');
+CREATE INDEX tickets_company_idx ON tickets(company_id);
+ALTER TABLE accounts ADD CONSTRAINT accounts_email_normalized CHECK(email=lower(trim(email)));
+ALTER TABLE companies ADD CONSTRAINT companies_slug_format CHECK(slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$' AND length(slug) BETWEEN 3 AND 48);

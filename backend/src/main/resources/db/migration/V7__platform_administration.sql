@@ -1,0 +1,11 @@
+ALTER TABLE companies ADD COLUMN status varchar(16) NOT NULL DEFAULT 'ACTIVE' CHECK(status IN ('ACTIVE','SUSPENDED'));
+ALTER TABLE companies ADD COLUMN created_at timestamptz;
+ALTER TABLE companies ALTER COLUMN created_at SET DEFAULT clock_timestamp();
+ALTER TABLE companies ADD COLUMN version bigint NOT NULL DEFAULT 0;
+CREATE TABLE platform_administrators(account_id uuid PRIMARY KEY REFERENCES accounts(id),provisioned_at timestamptz NOT NULL DEFAULT clock_timestamp());
+CREATE TABLE platform_audit(id uuid PRIMARY KEY,actor_id uuid REFERENCES accounts(id),actor_name varchar(100) NOT NULL,company_id uuid REFERENCES companies(id),action varchar(32) NOT NULL,reason varchar(500) NOT NULL,created_at timestamptz NOT NULL DEFAULT clock_timestamp());
+CREATE INDEX platform_audit_chronology ON platform_audit(created_at DESC,id);
+CREATE TRIGGER platform_audit_immutable BEFORE UPDATE OR DELETE ON platform_audit FOR EACH ROW EXECUTE FUNCTION immutable_ticket_activity();
+CREATE FUNCTION audit_platform_provision() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN INSERT INTO platform_audit(id,actor_name,action,reason) VALUES(gen_random_uuid(),'Database operator',CASE WHEN TG_OP='INSERT' THEN 'PLATFORM_PROVISIONED' ELSE 'PLATFORM_REVOKED' END,'Controlled database provisioning for account '||COALESCE(NEW.account_id,OLD.account_id)::text); RETURN COALESCE(NEW,OLD); END $$;
+CREATE TRIGGER platform_provision_audit AFTER INSERT OR DELETE ON platform_administrators FOR EACH ROW EXECUTE FUNCTION audit_platform_provision();
+CREATE INDEX tickets_analytics_cohort ON tickets(company_id,created_at,status,priority);

@@ -1,0 +1,10 @@
+# Optional local verification overlay for Docker Desktop under heavy host load.
+# Production/default mail timeouts remain unchanged in application.yml.
+services:
+  api:
+    environment:
+      JAVA_TOOL_OPTIONS: >-
+        -Dspring.mail.properties.mail.smtp.connectiontimeout=15000
+        -Dspring.mail.properties.mail.smtp.timeout=15000
+        -Dspring.mail.properties.mail.smtp.writetimeout=15000
+        -Dapp.auth-rate-limit=1000

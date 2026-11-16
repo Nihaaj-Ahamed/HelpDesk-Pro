@@ -1,0 +1,235 @@
+.notification-bell {
+  position: relative;
+}
+.bell-count {
+  font-size: 10px;
+  background: #c7f52e;
+  color: #171717;
+  padding: 2px 4px;
+  border-radius: 5px;
+}
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  top: 34px;
+  z-index: 60;
+  width: min(340px, 88vw);
+  background: white;
+  border: 1px solid #e8e8e8;
+  border-radius: 9px;
+  box-shadow: 0 8px 25px #0001;
+  padding: 12px;
+  max-height: 70vh;
+  overflow: auto;
+}
+.notification-dropdown > a {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+}
+.notification-dropdown small,
+.notification-list small {
+  display: block;
+  color: #737373;
+  font-size: 11px;
+  margin-top: 5px;
+}
+.notification-unread {
+  background: #f5f8eb;
+}
+.notification-list > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+.preferences-panel {
+  padding: 20px;
+  margin-top: 18px;
+}
+.preferences-panel h2 {
+  font-size: 15px;
+}
+.preferences-panel > p {
+  font-size: 12px;
+  color: #737373;
+  line-height: 1.7;
+}
+.check-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+}
+.check-row input {
+  width: auto;
+}
+.sla-panel {
+  margin: 18px 0;
+}
+.sla-targets {
+  padding: 16px;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.sla-target {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+}
+.sla-target small {
+  color: #737373;
+}
+.sla-chip {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 4px 7px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.sla-chip.on_track,
+.sla-chip.met {
+  color: #315b16;
+  background: #eff6df;
+}
+.sla-chip.at_risk {
+  color: #805400;
+  background: #fff4d6;
+}
+.sla-chip.breached {
+  color: #943e30;
+  background: #fae8e5;
+}
+.sla-chip.untracked {
+  color: #737373;
+  background: #f3f3f3;
+}
+.policy-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: end;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+.policy-row > strong {
+  font-size: 12px;
+  min-width: 100px;
+}
+.policy-row label {
+  max-width: 180px;
+}
+.policy-row button {
+  white-space: nowrap;
+}
+.operations-chart {
+  padding: 16px;
+}
+.chart-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 60px;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  margin: 12px 0;
+}
+.chart-track {
+  height: 9px;
+  background: #f2f2f2;
+  border-radius: 4px;
+}
+.chart-track > i {
+  display: block;
+  height: 100%;
+  background: #b4dd34;
+  border-radius: 4px;
+}
+.metric-explanation {
+  font-size: 12px;
+  color: #737373;
+  line-height: 1.8;
+}
+.report-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.report-filters label {
+  flex: 1;
+  min-width: 130px;
+}
+.report-filters select {
+  padding: 9px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+.platform-main {
+  max-width: 1280px;
+  margin: auto;
+  padding: 24px;
+}
+.platform-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+@media (max-width: 640px) {
+  .policy-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .policy-row label {
+    max-width: none;
+  }
+  .chart-row {
+    grid-template-columns: 90px 1fr 35px;
+  }
+}
+
+.operations-chart > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+}
+.chart-row > span {
+  overflow-wrap: anywhere;
+}
+.preferences-panel textarea {
+  min-height: 100px;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font: inherit;
+}
+@media (max-width: 640px) {
+  .notification-dropdown {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: 76px;
+    width: auto;
+    max-height: 75vh;
+  }
+  .platform-main {
+    padding: 16px;
+  }
+  .platform-main h1 {
+    font-size: 24px;
+  }
+}
